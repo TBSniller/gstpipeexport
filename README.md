@@ -1,11 +1,10 @@
 # Gstreamer .dot pipeline export using ezinject
-https://github.com/smx-smx/ezinject (`02b6e26bda46541b59a945d3fa8db53506869aa7`)
+https://github.com/smx-smx/ezinject (last tested on commit `56c0cbda38bbb97d826b2ec42f41429e0a758e75`)
 ## Build
 ```
 git clone https://github.com/smx-smx/ezinject.git
-# Module is based on an old commit
 cd ezinject/
-git checkout 02b6e26bda46541b59a945d3fa8db53506869aa7
+# git checkout 56c0cbda38bbb97d826b2ec42f41429e0a758e75
 
 # Get FindGstreamer modules
 wget https://raw.githubusercontent.com/GStreamer/qt-gstreamer/refs/heads/master/cmake/modules/FindGStreamer.cmake -O cmake-modules/FindGStreamer.cmake
