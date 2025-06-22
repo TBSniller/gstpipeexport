@@ -1,16 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "config.h"
-#include "log.h"
-#include "interface/if_hook.h"
-
-#include "dlfcn_compat.h"
-#include "ezinject_util.h"
-#include "ezinject_injcode.h"
+#include "ezinject_module.h"
 
 #include <gst/gst.h>
 #include <gst/gstdebugutils.h>
+
+#ifndef LOG_RESERVED_HANDLE
+  #define LOG_RESERVED_HANDLE stdout
+#endif
+
+#ifndef __LOG_DECLARE_VERBOSITY
+#define __LOG_DECLARE_VERBOSITY(verb) \
+  enum verbosity_level verbosity = verb
+#endif
+
+#ifndef LOG_SETUP
+#define LOG_SETUP(verb) \
+  FILE *LOG_RESERVED_HANDLE; \
+  __LOG_DECLARE_VERBOSITY(verb)
+#endif
 
 LOG_SETUP(V_DBG);
 
@@ -79,6 +88,10 @@ void installHooks(){
     }
 }
 
+int lib_loginit(log_config_t *log_cfg){
+	return -1;
+}
+
 int lib_preinit(struct injcode_user *user){
 	user->persist = 1;
 	return 0;
@@ -100,6 +113,8 @@ int lib_main(int argc, char *argv[]){
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stderr, NULL, _IONBF, 0);
 
+	#ifdef USE_LH
 	installHooks();
+	#endif
 	return 0;
 }

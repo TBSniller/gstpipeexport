@@ -16,10 +16,15 @@ add_ezinject_library(gstpipeexport
     SOURCES libgstpipeexport.c
 )
 
+set(required_libs "")
+if(NOT ANDROID)
+	list(APPEND required_libs dl)
+endif()
+
 target_compile_options(gstpipeexport PUBLIC -D__USE_MINGW_ANSI_STDIO=0)
 target_link_libraries(gstpipeexport ${GST_LIBRARIES}
                                      ${GSTREAMER_TAG_LIBRARY}
                                      ${GSTREAMER_PBUTILS_LIBRARY}
                                      ${GLIB_LIBRARIES}
                                      ${GOBJECT_LIBRARIES}
-                                     dl)
+                                     ${required_libs})
